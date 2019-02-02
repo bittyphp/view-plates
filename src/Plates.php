@@ -21,14 +21,25 @@ class Plates extends AbstractView
     protected $engine = null;
 
     /**
-     * @param string[]|string|null $paths
+     * @param string[]|string $paths
      * @param mixed[] $options
      */
     public function __construct($paths, array $options = [])
     {
-        $path = is_string($paths) ? $paths : reset($paths);
+        if (is_array($paths)) {
+            $path = reset($paths) ?: null;
+        } elseif (is_string($paths)) {
+            $path = $paths;
+        } else {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Path must be a string or an array; %s given.',
+                    gettype($paths)
+                )
+            );
+        }
 
-        $this->engine = new Engine($path ?: null, $options['extension'] ?? 'php');
+        $this->engine = new Engine($path, $options['extension'] ?? 'php');
 
         if (is_array($paths)) {
             foreach ($paths as $name => $path) {

@@ -27,6 +27,31 @@ class PlatesTest extends TestCase
     }
 
     /**
+     * @param mixed $paths
+     * @param string $expected
+     *
+     * @dataProvider sampleInvalidPaths
+     */
+    public function testInvalidPaths($paths, string $expected): void
+    {
+        self::expectException(\InvalidArgumentException::class);
+        self::expectExceptionMessage('Path must be a string or an array; '.$expected.' given.');
+
+        new Plates($paths);
+    }
+
+    public function sampleInvalidPaths(): array
+    {
+        return [
+            'null' => [null, 'NULL'],
+            'object' => [(object) [], 'object'],
+            'false' => [false, 'boolean'],
+            'true' => [true, 'boolean'],
+            'int' => [rand(), 'integer'],
+        ];
+    }
+
+    /**
      * @param string $template
      * @param string $extension
      * @param array $data
