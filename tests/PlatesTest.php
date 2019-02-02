@@ -28,13 +28,16 @@ class PlatesTest extends TestCase
 
     /**
      * @param string $template
+     * @param string $extension
      * @param array $data
      * @param string $expected
      *
      * @dataProvider sampleRender
      */
-    public function testRender(string $template, array $data, string $expected): void
+    public function testRender(string $template, string $extension, array $data, string $expected): void
     {
+        $this->fixture = new Plates(__DIR__.'/templates/', ['extension' => $extension]);
+
         $actual = $this->fixture->render($template, $data);
 
         self::assertEquals($expected, $actual);
@@ -47,16 +50,19 @@ class PlatesTest extends TestCase
         return [
             'simple' => [
                 'template' => 'test',
+                'extension' => 'tpl',
                 'data' => ['name' => $name],
                 'expected' => 'Hello, '.$name.PHP_EOL.'Goodbye, '.$name,
             ],
             'nested' => [
                 'template' => 'parent/test',
+                'extension' => 'php',
                 'data' => ['name' => $name],
                 'expected' => 'Hello, '.$name.', from parent'.PHP_EOL,
             ],
             'multiple nested' => [
                 'template' => 'parent/child/test',
+                'extension' => 'php',
                 'data' => ['name' => $name],
                 'expected' => 'Hello, '.$name.', from parent/child'.PHP_EOL,
             ],
