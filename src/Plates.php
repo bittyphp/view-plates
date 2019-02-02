@@ -21,7 +21,7 @@ class Plates extends AbstractView
     protected $engine = null;
 
     /**
-     * @param string[]|string $paths
+     * @param string[]|string|null $paths
      * @param mixed[] $options
      */
     public function __construct($paths, array $options = [])
