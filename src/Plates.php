@@ -18,7 +18,7 @@ class Plates extends AbstractView
     /**
      * @var Engine
      */
-    protected $engine = null;
+    private $engine = null;
 
     /**
      * @param string[]|string $paths
