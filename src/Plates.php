@@ -41,18 +41,20 @@ class Plates extends AbstractView
 
         $this->engine = new Engine($path, $options['extension'] ?? 'php');
 
-        if (is_array($paths)) {
-            foreach ($paths as $name => $path) {
-                if (is_numeric($name)) {
-                    throw new \InvalidArgumentException(
-                        sprintf(
-                            'Path "%s" does not have a namespace set.',
-                            $path
-                        )
-                    );
-                }
-                $this->engine->addFolder($name, $path);
+        if (!is_array($paths)) {
+            return;
+        }
+
+        foreach ($paths as $name => $path) {
+            if (is_numeric($name)) {
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'Path "%s" does not have a namespace set.',
+                        $path
+                    )
+                );
             }
+            $this->engine->addFolder($name, $path);
         }
     }
 
