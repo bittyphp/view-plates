@@ -54,7 +54,7 @@ class PlatesTest extends TestCase
     /**
      * @param string $template
      * @param string $extension
-     * @param array $data
+     * @param mixed[] $data
      * @param string $expected
      *
      * @dataProvider sampleRender
