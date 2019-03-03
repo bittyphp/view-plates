@@ -26,18 +26,7 @@ class Plates extends AbstractView
      */
     public function __construct($paths, array $options = [])
     {
-        if (is_array($paths)) {
-            $path = reset($paths) ?: null;
-        } elseif (is_string($paths)) {
-            $path = $paths;
-        } else {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Path must be a string or an array; %s given.',
-                    gettype($paths)
-                )
-            );
-        }
+        $path = $this->getPrimaryPath($paths);
 
         $this->engine = new Engine($path, $options['extension'] ?? 'php');
 
@@ -76,5 +65,30 @@ class Plates extends AbstractView
     public function getEngine(): Engine
     {
         return $this->engine;
+    }
+
+    /**
+     * Gets the primary path templates are in.
+     *
+     * @param string[]|string $paths
+     *
+     * @return string|null
+     */
+    private function getPrimaryPath($paths): ?string
+    {
+        if (is_array($paths)) {
+            return reset($paths) ?: null;
+        }
+
+        if (is_string($paths)) {
+            return $paths;
+        }
+
+        throw new \InvalidArgumentException(
+            sprintf(
+                'Path must be a string or an array; %s given.',
+                gettype($paths)
+            )
+        );
     }
 }
