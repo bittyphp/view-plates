@@ -21,7 +21,7 @@ class Plates extends AbstractView
     private $engine = null;
 
     /**
-     * @param string[]|string|null $paths
+     * @param string[]|string $paths
      * @param mixed[] $options
      */
     public function __construct($paths, array $options = [])
@@ -70,22 +70,18 @@ class Plates extends AbstractView
     /**
      * Gets the primary path templates are in.
      *
-     * @param string[]|string|null $paths
+     * @param string[]|string $paths
      *
      * @return string|null
      */
     private function getPrimaryPath($paths): ?string
     {
         if (is_array($paths)) {
-            return reset($paths) ?: null;
+            $paths = reset($paths);
         }
 
         if (is_string($paths)) {
             return $paths;
-        }
-
-        if (is_null($paths)) {
-            return null;
         }
 
         throw new \InvalidArgumentException(
