@@ -43,7 +43,6 @@ class PlatesTest extends TestCase
     public function sampleInvalidPaths(): array
     {
         return [
-            'null' => [null, 'NULL'],
             'object' => [(object) [], 'object'],
             'false' => [false, 'boolean'],
             'true' => [true, 'boolean'],
